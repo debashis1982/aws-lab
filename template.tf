@@ -1,4 +1,28 @@
 provider "aws" {}
+resource "aws_security_group" "http_ssh" {
+  name        = "http_ssh"
+  description = "Allow all egress and only http and ssh ingress"
+
+  ingress {
+    from_port   = 0
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port       = 0
+    to_port         = 80
+    protocol        = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 resource "aws_instance" "httpd" {
     ami = "ami-1e299d7e"
     instance_type = "t2.micro"
@@ -6,6 +30,9 @@ resource "aws_instance" "httpd" {
         Name = "httpd"
     }
    key_name = "debashis1982-new"
+   security_groups = [
+        "${aws_security_group.http_ssh.name}"
+    ]
 provisioner "file" {
       source = "provision.sh"
       destination = "/tmp/provision.sh"
