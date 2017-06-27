@@ -1,0 +1,201 @@
+{
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Metadata": {
+		"AWS::CloudFormation::Designer": {
+			"cb965c28-dfdf-42ac-a1cf-bf8ed365dcd9": {
+				"size": {
+					"width": 400,
+					"height": 260
+				},
+				"position": {
+					"x": 130,
+					"y": 60
+				},
+				"z": 0,
+				"embeds": [
+					"962b7a67-f2c5-4513-9bab-93da2cd33c40",
+					"b7b1d402-97c2-435e-a812-bc04a693f912"
+				]
+			},
+			"b7b1d402-97c2-435e-a812-bc04a693f912": {
+				"size": {
+					"width": 250,
+					"height": 210
+				},
+				"position": {
+					"x": 160,
+					"y": 100
+				},
+				"z": 1,
+				"parent": "cb965c28-dfdf-42ac-a1cf-bf8ed365dcd9",
+				"embeds": [
+					"91b2a9c0-40fa-45b1-a937-f3b2a4939a5a",
+					"774e706d-29d4-47dd-862e-22335c6bbae4"
+				]
+			},
+			"774e706d-29d4-47dd-862e-22335c6bbae4": {
+				"size": {
+					"width": 60,
+					"height": 60
+				},
+				"position": {
+					"x": 190,
+					"y": 140
+				},
+				"z": 2,
+				"parent": "b7b1d402-97c2-435e-a812-bc04a693f912",
+				"embeds": [],
+				"ismemberof": [
+					"962b7a67-f2c5-4513-9bab-93da2cd33c40"
+				]
+			},
+			"91b2a9c0-40fa-45b1-a937-f3b2a4939a5a": {
+				"size": {
+					"width": 60,
+					"height": 60
+				},
+				"position": {
+					"x": 190,
+					"y": 230
+				},
+				"z": 2,
+				"parent": "b7b1d402-97c2-435e-a812-bc04a693f912",
+				"embeds": [],
+				"ismemberof": [
+					"962b7a67-f2c5-4513-9bab-93da2cd33c40"
+				]
+			},
+			"621cea13-3c5c-4c7e-98b9-62ec8e6a7f0b": {
+				"source": {
+					"id": "774e706d-29d4-47dd-862e-22335c6bbae4"
+				},
+				"target": {
+					"id": "dee4dc96-6741-43d5-9349-3d670c1988be"
+				},
+				"z": 3
+			},
+			"2253b729-c001-4a4c-a753-24367e193171": {
+				"source": {
+					"id": "91b2a9c0-40fa-45b1-a937-f3b2a4939a5a"
+				},
+				"target": {
+					"id": "dee4dc96-6741-43d5-9349-3d670c1988be"
+				},
+				"z": 4
+			},
+			"962b7a67-f2c5-4513-9bab-93da2cd33c40": {
+				"size": {
+					"width": 60,
+					"height": 60
+				},
+				"position": {
+					"x": 440,
+					"y": 160
+				},
+				"z": 1,
+				"parent": "cb965c28-dfdf-42ac-a1cf-bf8ed365dcd9",
+				"embeds": []
+			},
+			"4c133fca-d383-4589-85a0-c2d278ca8605": {
+				"source": {
+					"id": "774e706d-29d4-47dd-862e-22335c6bbae4"
+				},
+				"target": {
+					"id": "962b7a67-f2c5-4513-9bab-93da2cd33c40"
+				},
+				"z": 3
+			},
+			"36999279-c5f6-4d3e-bfea-81f685ef3688": {
+				"source": {
+					"id": "91b2a9c0-40fa-45b1-a937-f3b2a4939a5a"
+				},
+				"target": {
+					"id": "962b7a67-f2c5-4513-9bab-93da2cd33c40"
+				},
+				"z": 4
+			}
+		}
+	},
+	"Resources": {
+		"myvpc": {
+			"Type": "AWS::EC2::VPC",
+			"Properties": {
+				"CidrBlock": "172.168.0.0/28"
+			},
+			"Metadata": {
+				"AWS::CloudFormation::Designer": {
+					"id": "cb965c28-dfdf-42ac-a1cf-bf8ed365dcd9"
+				}
+			}
+		},
+		"mysubnet": {
+			"Type": "AWS::EC2::Subnet",
+			"Properties": {
+				"VpcId": {
+					"Ref": "myvpc"
+				},
+				"CidrBlock": "172.168.0.0/28"
+			},
+			"Metadata": {
+				"AWS::CloudFormation::Designer": {
+					"id": "b7b1d402-97c2-435e-a812-bc04a693f912"
+				}
+			}
+		},
+		"EC2I23ACJ": {
+			"Type": "AWS::EC2::Instance",
+			"Properties": {
+				"SubnetId": {
+					"Ref": "mysubnet"
+				},
+				"InstanceType": "t2.micro",
+				"ImageId": "ami-01945f61",
+				"SecurityGroupIds": [{
+					"Ref": "EC2SG3I649"
+				}]
+			},
+			"Metadata": {
+				"AWS::CloudFormation::Designer": {
+					"id": "774e706d-29d4-47dd-862e-22335c6bbae4"
+				}
+			}
+		},
+		"EC2I4VDSQ": {
+			"Type": "AWS::EC2::Instance",
+			"Properties": {
+				"SubnetId": {
+					"Ref": "mysubnet"
+				},
+				"InstanceType": "t2.micro",
+				"ImageId": "ami-01945f61",
+				"SecurityGroupIds": [{
+					"Ref": "EC2SG3I649"
+				}]
+			},
+			"Metadata": {
+				"AWS::CloudFormation::Designer": {
+					"id": "91b2a9c0-40fa-45b1-a937-f3b2a4939a5a"
+				}
+			}
+		},
+		"EC2SG3I649": {
+			"Type": "AWS::EC2::SecurityGroup",
+			"Properties": {
+				"VpcId": {
+					"Ref": "myvpc"
+				},
+				"SecurityGroupIngress": [{
+					"FromPort": 100,
+					"ToPort": 65500,
+					"IpProtocol": "tcp"
+				}],
+				"GroupDescription": "My Test security group"
+			},
+			"Metadata": {
+				"AWS::CloudFormation::Designer": {
+					"id": "962b7a67-f2c5-4513-9bab-93da2cd33c40"
+				}
+			}
+		}
+	}
+}
