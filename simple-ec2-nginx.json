@@ -1,0 +1,166 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "3bd6084f-88df-4cbf-aedb-e8970db2efde": {
+                "size": {
+                    "width": 520,
+                    "height": 310
+                },
+                "position": {
+                    "x": 330,
+                    "y": 120
+                },
+                "z": 0,
+                "embeds": [
+                    "03be8a46-570a-49eb-ac00-0f493e87d595",
+                    "efd27916-b123-4b8e-b12f-a8e44b38fb70"
+                ]
+            },
+            "efd27916-b123-4b8e-b12f-a8e44b38fb70": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 705.7294512961603,
+                    "y": 210.1625391075158
+                },
+                "z": 1,
+                "parent": "3bd6084f-88df-4cbf-aedb-e8970db2efde",
+                "embeds": []
+            },
+            "03be8a46-570a-49eb-ac00-0f493e87d595": {
+                "size": {
+                    "width": 220,
+                    "height": 220
+                },
+                "position": {
+                    "x": 452,
+                    "y": 192
+                },
+                "z": 1,
+                "parent": "3bd6084f-88df-4cbf-aedb-e8970db2efde",
+                "embeds": [
+                    "d572c4a8-25a3-4c36-8493-adf660941a39"
+                ]
+            },
+            "d572c4a8-25a3-4c36-8493-adf660941a39": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 518.8347460097186,
+                    "y": 220.29778108041864
+                },
+                "z": 2,
+                "parent": "03be8a46-570a-49eb-ac00-0f493e87d595",
+                "embeds": [],
+                "ismemberof": [
+                    "efd27916-b123-4b8e-b12f-a8e44b38fb70"
+                ]
+            },
+            "41737bf6-f384-4272-b97c-4857fb70f87a": {
+                "source": {
+                    "id": "d572c4a8-25a3-4c36-8493-adf660941a39"
+                },
+                "target": {
+                    "id": "efd27916-b123-4b8e-b12f-a8e44b38fb70"
+                },
+                "z": 3
+            }
+        }
+    },
+    "Resources": {
+        "EC2VPC4RQCG": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "172.17.10.0/16",
+                "EnableDnsHostnames": true
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "3bd6084f-88df-4cbf-aedb-e8970db2efde"
+                }
+            }
+        },
+        "EC2SG4E7HZ": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "EC2VPC4RQCG"
+                },
+                "SecurityGroupIngress": [
+                    {
+                        "ToPort": 80,
+                        "FromPort": "80",
+                        "IpProtocol": "tcp",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "ToPort": 443,
+                        "FromPort": "80",
+                        "IpProtocol": "tcp",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ],
+                "GroupDescription": "my test security grp",
+                "GroupName": "mytestsecuritygrp"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "efd27916-b123-4b8e-b12f-a8e44b38fb70"
+                }
+            }
+        },
+        "EC2S35W5R": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "EC2VPC4RQCG"
+                },
+                "AvailabilityZone": "us-west-2c",
+                "MapPublicIpOnLaunch": true,
+                "CidrBlock": "172.17.10.0/16"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "03be8a46-570a-49eb-ac00-0f493e87d595"
+                }
+            }
+        },
+        "EC2IQ91T": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "EC2S35W5R"
+                },
+                "SecurityGroupIds": [
+                    {
+                        "Ref": "EC2SG4E7HZ"
+                    }
+                ],
+                "ImageId": "ami-05141f7c",
+                "InstanceType":"t2.micro",
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash -ex",
+                                "\n",
+                                "sudo /etc/init.d/nginx start"
+                            ]
+                        ]
+                    }
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "d572c4a8-25a3-4c36-8493-adf660941a39"
+                }
+            }
+        }
+    }
+}
